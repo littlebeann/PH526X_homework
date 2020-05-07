@@ -1,0 +1,117 @@
+import numpy as np
+
+#exercise 1
+def create_board():
+    return np.zeros((3,3))
+
+#exercise 2
+def place(board,player, position):
+    if board[position]==0:
+        board[position]=player
+
+board = create_board()
+place(board,1, (0,0))
+
+print(board)
+
+#exercise 3 
+def possibilities(board):
+    return list(zip(*np.where(board == 0))) 
+
+print (possibilities(board))
+
+#exercise 4
+import random
+random.seed(1)
+def random_place(board,player):
+    selections = possibilities(board)
+    if len(selections)>0:
+        selection = random.choice(selections)
+        place(board, player, selection)
+    return board
+
+print(random_place(board,2))
+
+#exercise 5
+random.seed(1)
+board = create_board()
+for i in range(3):
+    for player in [1,2]:
+        random_place(board,player)
+print (board)
+
+#exercise 6
+def row_win(board,player):
+    if np.any(np.all(board==player, axis=1)):
+        return True
+    else:
+        return False
+row_win(board,1)
+
+#exercise 7
+def col_win(board, player):
+    if np.any(np.all(board==player,axis=0)):
+        return True
+    else:
+        return False
+col_win(board,1)
+
+#exercise 8
+board [1,1] = 2
+def diag_win(board, player):
+    if np.all(np.diag(board) == player) or np.all(np.diag(np.fliplr(board)) == player):
+        return True
+    else:
+        return False
+print(diag_win)
+
+#exercise 9
+def evaluate(board):
+    winner = 0
+    for player in [1, 2]:
+        if row_win(board, player)or col_win(board, player) or diag_win(board, player):
+            winner=player
+    if np.all(board != 0) and winner == 0:
+        winner = -1
+    return winner
+
+evaluate(board)
+
+#exercise 10
+random.seed(1)
+def play_game():
+    a = create_board()
+    current_player = 1
+    while True:
+        random_place(a,current_player)
+        if evaluate(a) in [1, 2, -1]:
+            return evaluate(a)
+        if current_player == 1:
+            current_player = 2
+        else:
+            current_player = 1
+results= []
+for i in range (1000):
+    results.append (play_game())
+
+results.count (1)
+
+#exercise 11
+random.seed(1)
+def play_strategic_game():
+    b = create_board()
+    current_player = 2
+    place (b, 1, (1,1))
+    while True:
+        random_place(b,current_player)
+        if evaluate(b) in [1, 2, -1]:
+            return evaluate(b)
+        if current_player == 1:
+            current_player = 2
+        else:
+            current_player = 1
+strategic_results= []
+for i in range (1000):
+    strategic_results.append (play_strategic_game())
+
+print(strategic_results.count (1))
