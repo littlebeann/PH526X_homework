@@ -1,0 +1,46 @@
+#exercise 1
+import string
+alphabet = " " + string.ascii_lowercase
+
+print(alphabet)
+
+#exercise 2
+positions = dict(zip(list(alphabet), [i for i in range(len(alphabet))]))
+print (positions)
+
+#exercise 3
+x = []
+encoded_message = ""
+message = "hi my name is caesar"
+
+for letter in message:
+  n = (positions[letter] + 1) % 27
+  a = [k for k, v in positions.items() if v == n][0]
+  x.append(a)
+encoded_message = encoded_message.join(x)
+
+#exercise 4
+y = []
+encoded_message = ""
+message = "hi my name is caesar"
+
+for letter in message:
+    shift = 3
+    n = (positions[letter] + shift) % 27
+    b = [k for k, v in positions.items() if v == n][0]
+    y.append(b)
+encoded_message = encoded_message.join(y)
+print (encoded_message)
+
+#exercise 5
+z = []
+decoded_message = ""
+encoded_message = "klcpacqdphclvcfdhvdu"
+
+for letter in encoded_message:
+    shift = -3
+    n = (positions[letter] + shift) % 27
+    c = [k for k, v in positions.items() if v == n][0]
+    z.append(c)
+decoded_message = decoded_message.join(z)
+print (decoded_message)
